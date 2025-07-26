@@ -1,14 +1,8 @@
 node_modules/
 __pycache__
-kafka_2.13-4.0.0/
-kafka_2.13-4.0.0.tgz
+.env
 venv/
 .venv/
 .vscode
-a.out
-*.png
-*.class
 *.wt
-mongo1/
-mongo2/
-mongo3/
+setting.json
