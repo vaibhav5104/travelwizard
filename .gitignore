@@ -5,4 +5,4 @@ venv/
 .venv/
 .vscode
 *.wt
-setting.json
+settings.json
