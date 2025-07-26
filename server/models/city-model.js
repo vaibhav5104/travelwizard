@@ -26,7 +26,7 @@ const citySchema = new mongoose.Schema({
 citySchema.pre('save', async function (next) {
     if (!this.mapUrl) {
         const encodedName = encodeURIComponent(this.name);
-        this.mapUrl = `https://www.google.com/maps/embed/v1/place?key=AIzaSyDH9KOU1PcvazhyDd9osO0TWG3FmCSs_Uo&q=${encodedName}`;
+        this.mapUrl = `https://www.google.com/maps`;
     }
 
     this.featureVector = cityFeatureVector(this.best_time_to_visit);
