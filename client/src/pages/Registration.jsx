@@ -5,7 +5,7 @@ import { useAuth } from "../store/auth";
 import { GoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 
-export const Register = () => {
+const Register = () => {
     const defaultUser = {
         username: "",
         email: "",
@@ -256,3 +256,4 @@ export const Register = () => {
         </div>
     );
 };
+export default Register

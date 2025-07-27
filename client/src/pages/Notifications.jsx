@@ -1,74 +1,7 @@
-// import React, { useEffect, useState } from 'react';
-
-// export const NotificationsPage = () => {
-//   const [requests, setRequests] = useState([]);
-//   const [requestUsername,setRequestUsername] = useState('');
-
-//   useEffect(() => {
-//     fetch(`${API}/api/auth/user`, {
-//       headers: {
-//         Authorization: 'Bearer ' + localStorage.getItem('token')
-//       }
-//     })
-//       .then(res => res.json())
-//       // .then(data => setRequestUsername(data.userData.username))
-//       .then(data => setRequests(data.userData))
-      
-//   }, []);
-
-//   const handleAction = async (id, action) => {
-//     const endpoint = action === 'accept' 
-//       ? `${API}/api/friends/accept` 
-//       : `${API}/api/friends/reject`;
-
-//     const res = await fetch(endpoint, {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         Authorization: 'Bearer ' + localStorage.getItem('token')
-//       },
-//       body: JSON.stringify({ requesterId: id })
-//     });
-
-//     if (res.ok) {
-//       setRequests(prev => prev.filter(req => req.from._id !== id));
-//       console.log("response is  :" ,res);
-//     }
-//   };
-
-//   return (
-//     <div className="max-w-xl mx-auto mt-10 p-4">
-//       <h2 className="text-2xl font-bold mb-4">Friend Requests</h2>
-//       {requests.length === 0 ? (
-//         <p className="text-gray-500">No new requests</p>
-//       ) : (
-//         requests.friendRequests.map(req => (
-//           <div key={req.from._id + '-' + req.status} className="flex justify-between items-center bg-white shadow p-4 mb-3 rounded-lg">
-//             <span className="font-medium text-blue-800">{requests.username}</span>
-//             <div className="flex gap-2">
-//               <button
-//                 className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded"
-//                 onClick={() => handleAction(req.from, 'accept')}
-//               >
-//                 Accept
-//               </button>
-//               <button
-//                 className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
-//                 onClick={() => handleAction(req.from, 'reject')}
-//               >
-//                 Reject
-//               </button>
-//             </div>
-//           </div>
-//         ))
-//       )}
-//     </div>
-//   );
-// };
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../store/auth';
 
-export const NotificationsPage = () => {
+const NotificationsPage = () => {
   const [friendRequests, setFriendRequests] = useState([]);
   const [username, setUsername] = useState('');
   const [loading, setLoading] = useState(true);
@@ -190,3 +123,4 @@ export const NotificationsPage = () => {
     </div>
   );
 };
+export default NotificationsPage

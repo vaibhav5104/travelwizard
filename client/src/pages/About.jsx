@@ -2,7 +2,7 @@ import React from 'react';
 import { Sparkles, Globe, Target, Heart, MapPin, Shield, DollarSign, Compass, Users, Mail } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
 
-export const About = () => {
+const About = () => {
   const navigate = useNavigate()
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
@@ -177,3 +177,4 @@ export const About = () => {
   );
 };
 
+export default About

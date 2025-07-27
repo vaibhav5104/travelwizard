@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Search, MapPin, Star, ExternalLink, Hotel as HotelIcon } from "lucide-react";
 import { useAuth } from "../store/auth";
 
-export const Hotel = () => {
+const Hotel = () => {
   const [city, setCity] = useState("Shimla"); // default city
   const [hotels, setHotels] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -224,3 +224,4 @@ export const Hotel = () => {
     </div>
   );
 };
+export default Hotel

@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../store/auth";
 
 
-export const Events = () => {
+const Events = () => {
   const [eventCity, setEventCity] = useState("");
   const [events, setEvents] = useState([]);
   const [eventLoading, setEventLoading] = useState(false);

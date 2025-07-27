@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Search, MapPin, Star, DollarSign, Navigation } from "lucide-react";
 import { useAuth } from "../store/auth";
 
-export const CityPlaces = () => {
+const CityPlaces = () => {
   const [cityData, setCityData] = useState(null);
   const [search, setSearch] = useState("");
   const [error, setError] = useState("");
@@ -213,3 +213,5 @@ export const CityPlaces = () => {
     </div>
   );
 };
+
+export default CityPlaces

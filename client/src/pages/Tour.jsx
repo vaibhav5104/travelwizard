@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import { useNavigate,Link } from 'react-router-dom';
 import { MapPin, Calendar, DollarSign, Hotel, Clock } from 'lucide-react';
 
-export const Tour = () => {
+const Tour = () => {
     const [city, setCity] = useState("");
     const [finalCity, setFinalCity] = useState(null);
     const [itinerary, setItinerary] = useState(null);
@@ -597,37 +597,6 @@ const onSubmit = async (e) => {
                         </button>
                     </div>
                 </div>
-
-                {/* Enhanced Popular Destinations */}
-                {/* <div className="mt-10">
-                    <h3 className="text-xl font-medium text-gray-700 mb-6 flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                        </svg>
-                        Popular Destinations
-                    </h3>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                        {popularDestinations.map((destination, index) => (
-                            <div 
-                                key={index} 
-                                className="relative rounded-xl overflow-hidden h-40 cursor-pointer group transform transition-all duration-500 hover:scale-105 hover:shadow-xl"
-                                onClick={() => handlePopularDestinationClick(destination.name)}
-                            >
-                                <div 
-                                    className="absolute inset-0 bg-cover bg-center transform transition-transform duration-10000 group-hover:scale-110" 
-                                    style={{ backgroundImage: `url(${destination.image})` }}
-                                ></div>
-                                <div className="absolute inset-0 bg-gradient-to-b from-black/10 to-black/70 group-hover:from-black/20 group-hover:to-black/80 transition-all duration-300"></div>
-                                <div className="absolute inset-0 flex items-end p-4">
-                                    <div>
-                                        <span className="text-white font-medium text-lg drop-shadow-md">{destination.name}</span>
-                                        <div className="w-0 h-0.5 bg-white transform transition-all duration-300 group-hover:w-full mt-1"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>*/}
             </div> 
 
             {/* City Details - Enhanced */}
@@ -1842,3 +1811,4 @@ const onSubmit = async (e) => {
 
     );
 };
+export default Tour

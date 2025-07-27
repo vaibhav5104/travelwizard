@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { Navigate } from "react-router-dom"; // Added import for Navigate
 import { Link, useLocation } from 'react-router-dom';
 
-export const AdminDashboard = () => {
+const AdminDashboard = () => {
     const { user, isLoading, isAuthenticated, authorizationToken, API } = useAuth();
     const [users, setUsers] = useState([]);
     const [stats, setStats] = useState({
@@ -492,3 +492,4 @@ export const AdminDashboard = () => {
     );
 };
 
+export default AdminDashboard

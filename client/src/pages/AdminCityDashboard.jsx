@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom"
 import { useAuth } from "../store/auth"
 
-export const AdminCity = () => {
+const AdminCity = () => {
     const { API,isAuthenticated, user, isLoading } = useAuth();
 
     const [cities, setCities] = useState([]);
@@ -177,3 +177,4 @@ export const AdminCity = () => {
         </div>
     );
 }
+export default AdminCity

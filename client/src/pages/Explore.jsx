@@ -4,7 +4,7 @@ import { Calendar, Clock, Hotel, MapPin } from "lucide-react";
 import { toast } from "react-toastify";
 import { useAuth } from "../store/auth";
 
-export const Explore = () => {
+const Explore = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [city, setCity] = useState("");
   const {API,user} = useAuth()
@@ -427,3 +427,4 @@ const enrichItineraries = async (itineraries) => {
     </div>
   );
 };
+export default Explore

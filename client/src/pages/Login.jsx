@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { GoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 
-export const Login = () => {
+const Login = () => {
     const [user, setUser] = useState({
         email: "",
         password: "",
@@ -189,3 +189,4 @@ export const Login = () => {
         </div>
     );
 };
+export default Login

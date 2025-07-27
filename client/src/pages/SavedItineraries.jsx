@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { MapPin, Calendar, DollarSign, Hotel, Clock } from 'lucide-react';
 import { useAuth } from '../store/auth';
 
-export const SavedItineraries = () => {
+const SavedItineraries = () => {
   const [itineraries, setItineraries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedId, setSelectedId] = useState(null);
@@ -318,3 +318,4 @@ export const SavedItineraries = () => {
     </div>
   );
 };
+export default SavedItineraries

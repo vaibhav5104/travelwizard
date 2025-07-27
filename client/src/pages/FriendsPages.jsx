@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../store/auth';
 
-export const FriendsPage = () => {
+const FriendsPage = () => {
   const [friends, setFriends] = useState([]);
   const [loading, setLoading] = useState(true);
   const {API} = useAuth()
@@ -134,3 +134,4 @@ export const FriendsPage = () => {
     </div>
   );
 };
+export default FriendsPage

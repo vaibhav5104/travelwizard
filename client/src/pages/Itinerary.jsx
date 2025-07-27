@@ -10,7 +10,7 @@ import { useAuth } from '../store/auth';
 import { MapPin, Calendar, DollarSign, Hotel, Clock } from 'lucide-react';
 
 
-export const ItineraryViewer = () => {
+const ItineraryViewer = () => {
   const { id } = useParams(); // Get itinerary ID from URL
   const [itinerary, setItinerary] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -861,3 +861,5 @@ useEffect(() => {
     
   );
 };
+
+export default ItineraryViewer

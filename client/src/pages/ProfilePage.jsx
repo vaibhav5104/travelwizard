@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../store/auth';
 
-export const ProfilePage = () => {
+const ProfilePage = () => {
   const { API, user, isAuthenticated } = useAuth();
   const [profile, setProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -26,8 +26,6 @@ export const ProfilePage = () => {
       }
 
       try {
-        // In a real app, you might need to fetch the complete user profile here
-        // For now, we'll use the user object from auth context
         setProfile(user);
         setFormData({
           username: user.username || '',
@@ -498,3 +496,4 @@ export const ProfilePage = () => {
     </div>
   );
 };
+export default ProfilePage
