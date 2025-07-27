@@ -31,6 +31,7 @@ import { NotificationsPage } from './pages/Notifications'
 import { ItineraryViewer } from './pages/Itinerary'
 import SeasonalCities from './pages/SeasonalCities'
 import City from './pages/City'
+import { Analytics } from '@vercel/analytics/react'
 
 
 export const App = () => {
@@ -74,6 +75,7 @@ export const App = () => {
                 {/* <Route path="/test" element={<Testing2/>} /> */}
                 
             </Routes>
+            <Analytics />
         </BrowserRouter>
     </>)
 
