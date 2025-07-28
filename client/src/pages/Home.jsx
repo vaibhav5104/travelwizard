@@ -254,13 +254,13 @@ const Home = () => {
                 <div className="relative rounded-lg overflow-hidden aspect-[4/5] shadow-lg">
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10"></div>
                   <img 
-                    className="absolute h-48 w-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
                     src={destination.image}
                     alt={`${destination.name}, ${destination.state} - ${destination.description}`}
                     loading={index < 2 ? "eager" : "lazy"}
                     decoding="async"
                     width="400"
-                    height="300"
+                    height="500"
                   />
                   <div className="absolute bottom-0 left-0 right-0 p-4 z-20">
                     <h3 className="text-xl font-bold text-white mb-1">{destination.name}</h3>
@@ -328,7 +328,7 @@ const Home = () => {
         
         /* Prevent layout shift */
         .destination-card img {
-          min-height: 192px; /* h-48 equivalent */
+          min-height: 100%; /* Full container height */
         }
         
         /* Optimize animations for better performance */
