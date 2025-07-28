@@ -1,8 +1,6 @@
 const User = require('../models/user-model')
-// const bcrypt = require('bcrypt')
 const nodemailer = require('nodemailer');
-
-// controllers/auth-controller.js
+const crypto = require("crypto");
 const { OAuth2Client } = require('google-auth-library');
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
@@ -55,9 +53,9 @@ const login = async (req,res) => {
         const {email,password} = req.body
         const userExist = await User.findOne({email})
         if(!userExist) return res.status(400).json({message : "User doesnot exist"})
-        const user = await userExist.comparePassword(password)
+        const isMatch = await userExist.comparePassword(password)
     
-        if(user){
+        if(isMatch){
             res
             .status(200)
             .json({
@@ -171,7 +169,7 @@ const googleLogin = async (req, res) => {
         let user = await User.findOne({ email });
 
         const baseUsername = name.replace(/\s+/g, '').toLowerCase(); // "John Doe" -> "johndoe"
-        const uniqueUsername = baseUsername + Date.now(); // "johndoe1672342446"
+        const uniqueUsername = `${baseUsername}_${Date.now().toString().slice(-4)}${Math.floor(Math.random() * 1000)}`;
 
 
         if (!user) {
@@ -180,7 +178,8 @@ const googleLogin = async (req, res) => {
                     username: uniqueUsername,
                     email,
                     phone: 1234567890, // placeholder
-                    password: sub // using Google's sub as temp password
+                    // password: sub // using Google's sub as temp password
+                    password: crypto.randomBytes(32).toString('hex') // instead of sub {since sub is a Google unique user ID and it's not meant to be a password.}
                 });
             } catch (err) {
                 console.error("Error creating user:", err);
@@ -188,7 +187,12 @@ const googleLogin = async (req, res) => {
             }
         }
 
-        const token = await user.generateToken();
+        let token;
+        try {
+            token = await user.generateToken();
+        } catch (err) {
+            return res.status(500).json({ error: "Token generation failed", details: err.message });
+        }
         res.status(200).json({
             message: "Google login successful",
             token,
