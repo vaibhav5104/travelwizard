@@ -221,7 +221,7 @@ useEffect(() => {
       }));
 
       setRecommendedItineraries(enrichedItineraries);
-      console.log("Recommended itineraries with images:", enrichedItineraries);
+      // console.log("Recommended itineraries with images:", enrichedItineraries);
 
     } catch (error) {
       console.log("handleRecommendedItineraries error:", error);

@@ -22,7 +22,7 @@ const UserPage = () => {
         const data = await res.json();
         if (res.ok) {
           setProfileUser(data.userProfile);
-          console.log("User is : ",user);
+          // console.log("User is : ",user);
           // Check if we've already sent a request
           if (data.userProfile.friendRequests?.some(req => 
             req.from === user?._id || req.to === user?._id)) {

@@ -322,7 +322,7 @@ const onSubmit = async (e) => {
                 const itineraryData = await response.json();
                 setIsTourSubmit(true);
                 setItinerary(itineraryData);
-                console.log("Itenerary is  : ",itineraryData);
+                // console.log("Itenerary is  : ",itineraryData);
                 
                 // Smooth scroll to itinerary section
                 document.getElementById('itinerary-section')?.scrollIntoView({ behavior: 'smooth' });
@@ -383,7 +383,7 @@ const onSubmit = async (e) => {
       }));
 
       setRecommendedItineraries(enrichedItineraries);
-      console.log("Recommended itineraries with images:", enrichedItineraries);
+      // console.log("Recommended itineraries with images:", enrichedItineraries);
     } catch (error) {
       console.log("handleRecommendedItineraries error:", error);
       toast.error(`Error: ${error.message}`);
