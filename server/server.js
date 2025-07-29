@@ -32,6 +32,12 @@ app.use("/api/place", placeRouter);
 app.use('/api/itineraries', itineraryRoutes);
 app.use('/api/friends', friendRoutes);
 
+// ✅ Ping route to prevent cold starts
+app.get('/api/ping', (req, res) => {
+    res.status(200).send('pong');
+});
+
+
 connectDB().then(() => {
     app.listen(PORT, () => {
         console.log(`Server is running at PORT ${PORT}`);
