@@ -19,7 +19,7 @@ If you discover a security vulnerability in this project, **please report it res
 
 ### 🔁 How to Report
 
-- **Email:** [vaibhav5104@gmail.com](mailto:vaibhav5104@gmail.com)
+- **Email:** [vaibhavsharma5104@gmail.com](mailto:vaibhavsharma5104@gmail.com)
 - **GitHub Issue:** [Open a private issue using GitHub Security Advisories](https://github.com/vaibhav5104/travelwizard/security/advisories)
 - **Expected Response Time:** Within **72 hours**
 
