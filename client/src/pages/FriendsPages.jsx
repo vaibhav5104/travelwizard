@@ -58,15 +58,11 @@ const FriendsPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 p-4">
+    <div className="max-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 p-4">
       {/* Decorative elements */}
-      <div className="fixed top-0 left-0 right-0 h-16 bg-gradient-to-r from-purple-600 to-blue-500 opacity-20"></div>
-      <div className="fixed bottom-0 right-0 left-0 h-16 bg-gradient-to-r from-blue-500 to-purple-600 opacity-20"></div>
-      <div className="fixed top-20 left-8 w-32 h-32 rounded-full bg-purple-500 opacity-10 filter blur-xl"></div>
-      <div className="fixed bottom-20 right-8 w-40 h-40 rounded-full bg-blue-500 opacity-10 filter blur-xl"></div>
       
       {/* Content */}
-      <div className="max-w-xl mx-auto mt-6 backdrop-blur-sm bg-white bg-opacity-80 rounded-xl shadow-xl overflow-hidden border border-white border-opacity-30 relative z-10">
+      <div className=" mx-auto mt-6 backdrop-blur-sm bg-white bg-opacity-80 rounded-xl shadow-xl overflow-hidden border border-white border-opacity-30 relative z-10">
         {/* Header */}
         <div className="bg-gradient-to-r from-purple-600 to-blue-500 p-5 text-white">
           <div className="flex justify-between items-center">

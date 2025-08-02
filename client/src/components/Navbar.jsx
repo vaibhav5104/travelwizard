@@ -184,6 +184,17 @@ useEffect(() => {
                       <div className="px-4 py-1">
                         <span className="text-xs font-semibold text-gray-500 dark:text-gray-300 uppercase tracking-wider">Admin</span>
                       </div>
+                      <Link
+                          key={'/admin'}
+                          to={'/admin'}
+                          className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        >
+                          <svg className="w-4 h-4 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                          </svg>
+                          {'Admin'}
+                        </Link>
                       {adminRoutes.map((route) => (
                         <Link
                           key={route.path}
@@ -304,11 +315,23 @@ useEffect(() => {
                     isActive(route.path)
                       ? 'text-blue-700 dark:text-blue-500'
                       : 'text-gray-700 hover:text-blue-700 dark:text-gray-300 dark:hover:text-blue-500'
-                  } text-sm font-medium transition-colors duration-300`}
+                  } text-sm ml-6 font-medium transition-colors duration-300`}
                 >
                   {route.label}
                 </Link>
               ))}
+              {isMobileView && (
+                <Link
+                    to="/admin"
+                    className={`block py-2 px-3 rounded-md ${
+                      isActive('/admin')
+                        ? 'text-white bg-blue-700 md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500'
+                        : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700'
+                    }`}
+                  >
+                    Admin
+                  </Link>
+              )}
             </div>
           </div>
         )}

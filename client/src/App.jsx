@@ -9,6 +9,8 @@ import  Login  from './pages/Login'
 import Register  from './pages/Registration'
 import  Error  from './pages/Error'
 import Loader from './components/Loader' 
+import ScrollToTop from './components/ScrollToTop'
+
 
 // Lazy-loaded pages
 const About = lazy(() => import('./pages/About'))
@@ -37,6 +39,7 @@ const City = lazy(() => import('./pages/City'))
 export const App = () => {
   return (
     <BrowserRouter>
+      <ScrollToTop/>
       <Navbar />
       <Suspense fallback={<Loader />}>
         <Routes>

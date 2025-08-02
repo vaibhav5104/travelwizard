@@ -119,7 +119,7 @@ image : "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?crop=entro
   }, [events]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-indigo-100 via-purple-50 to-blue-50 overflow-y-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-indigo-100 via-purple-50 to-blue-50 overflow-x-hidden">
       <ToastContainer position="top-right" autoClose={3000} />
       
       {/* Hero Section */}
@@ -442,7 +442,7 @@ image : "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?crop=entro
                     </div>
 
                     {/* Corner fold effect */}
-                    <div className="absolute top-0 right-0 w-12 h-12 bg-gradient-to-br from-white via-purple-100 to-purple-200 transform rotate-90 translate-x-6 -translate-y-6 group-hover:translate-x-4 group-hover:-translate-y-4 transition-transform duration-300"></div>
+                    {/* <div className="absolute top-0 right-0 w-12 h-12 bg-gradient-to-br from-white via-purple-100 to-purple-200 transform rotate-90 translate-x-6 -translate-y-6 group-hover:translate-x-4 group-hover:-translate-y-4 transition-transform duration-300"></div> */}
                   </div>
                 ))}
               </div>

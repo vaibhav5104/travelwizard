@@ -83,7 +83,7 @@ const UserPage = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto mt-10">
+    <div className="max-w-2xl mx-auto mt-10 bg-blue">
       <div className="bg-white rounded-xl shadow-lg overflow-hidden">
         {/* Cover photo */}
         <div className="h-40 bg-gradient-to-r from-blue-400 to-indigo-500"></div>
