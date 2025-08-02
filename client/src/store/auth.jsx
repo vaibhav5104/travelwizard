@@ -2,12 +2,14 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext();
 
+
 const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(!!token);
-  
+  const [notifications, setNotifications] = useState(0); 
+
   const API = import.meta.env.VITE_API_URL;
   const F_API = import.meta.env.VITE_FRONTEND_API_URL;
   const FASTAPI = import.meta.env.VITE_FASTAPI_SCRAPING_URL
@@ -21,6 +23,7 @@ const AuthProvider = ({ children }) => {
   const LogoutUser = () => {
     setToken(null);
     setUser(null);
+    setNotifications(0); // ✅ clear notifications on logout
     setIsAuthenticated(false);
     localStorage.removeItem("token");
   };
@@ -43,16 +46,26 @@ const AuthProvider = ({ children }) => {
 
       if (response.ok) {
         const data = await response.json();
-        // console.log(data.userData._id);
-        setUser(data.userData);
+        const userData = data.userData;
+        setUser(userData);
         setIsAuthenticated(true);
+
+        // ✅ Update notifications
+        if (userData?.friendRequests?.length > 0) {
+          setNotifications(userData.friendRequests.length);
+        } else {
+          setNotifications(0);
+        }
+
       } else {
         setUser(null);
+        setNotifications(0); // fallback
         setIsAuthenticated(false);
       }
     } catch (error) {
       console.error("Error fetching user data", error);
       setUser(null);
+      setNotifications(0); // fallback
       setIsAuthenticated(false);
     } finally {
       setIsLoading(false);
@@ -70,6 +83,9 @@ const AuthProvider = ({ children }) => {
         storeTokenInLS,
         LogoutUser,
         user,
+        setUser,
+        notifications, // ✅ exported
+        setNotifications, // ✅ exported
         authorizationToken,
         isLoading,
         API,

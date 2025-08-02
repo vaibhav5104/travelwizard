@@ -7,9 +7,23 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const location = useLocation();
-  const {user, isAuthenticated} = useAuth();
+  const {user,notifications, isAuthenticated} = useAuth();
   const admin = user?.isAdmin ?? false;
   const profileMenuRef = useRef(null);
+  const [isMobileView, setIsMobileView] = useState(window.innerWidth < 768);
+
+useEffect(() => {
+  const handleResize = () => {
+    setIsMobileView(window.innerWidth < 768);
+  };
+
+  window.addEventListener('resize', handleResize);
+  return () => window.removeEventListener('resize', handleResize);
+}, []);
+
+
+
+
 
   // Handle scroll effect
   useEffect(() => {
@@ -22,13 +36,15 @@ const Navbar = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-  // console.log(user);
+
 
   // Close mobile menu and profile dropdown when location changes
   useEffect(() => {
     setIsMobileMenuOpen(false);
     setIsProfileMenuOpen(false);
   }, [location]);
+  console.log(user)
+// console.log("Notifications:", notifications);
 
   // Close profile dropdown when clicking outside
   useEffect(() => {
@@ -103,17 +119,19 @@ const Navbar = () => {
   return (
     <>
       <nav 
-        className={`fixed w-full z-50 transition-all duration-300 ${
+        className={`relative w-full z-50 transition-all duration-300 ${
           isScrolled 
             ? 'bg-white border-gray-200 dark:bg-gray-900 shadow-md py-2' 
             : 'bg-white border-gray-200 dark:bg-gray-900 py-4'
         }`}
       >
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-4">
+        {/* <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-4">
+         */}<div className="max-w-screen-xl flex items-center justify-between mx-auto px-4">
+
           {/* Logo */}
           <Link 
             to="/" 
-            className="flex items-center space-x-2"
+            className="flex items-center space-x-2 flex-shrink-0"
           >
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-yellow-400 to-pink-500 flex items-center justify-center overflow-hidden group-hover:scale-110 transition-transform duration-300">
               <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -139,8 +157,8 @@ const Navbar = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                     </svg>
                   </div>
-                  {user?.notifications && user.notifications.length > 0 && (
-                    <span className="absolute top-0 right-0 h-3 w-3 bg-red-500 rounded-full"></span>
+                  {notifications > 0 && (
+                    <span className="absolute top-0 right-0 h-2 w-2 bg-orange-600 rounded-full"></span>
                   )}
                 </button>
                 
@@ -153,7 +171,7 @@ const Navbar = () => {
                   {/* User Info */}
                   {/* <div className="px-4 py-3">
                     <span className="block text-sm text-gray-900 dark:text-white">
-                      User : {user?.username || 'User'}
+                      {user?.username || 'User'}
                     </span>
                     <span className="block text-sm text-gray-500 truncate dark:text-gray-400">
                       {user?.email || 'user@example.com'}
@@ -161,7 +179,7 @@ const Navbar = () => {
                   </div> */}
                   
                   {/* Admin Links in Profile Menu */}
-                  {admin && (
+                  {admin && isMobileView && (
                     <div className="py-2 border-b border-gray-100 dark:border-gray-600">
                       <div className="px-4 py-1">
                         <span className="text-xs font-semibold text-gray-500 dark:text-gray-300 uppercase tracking-wider">Admin</span>
@@ -194,9 +212,9 @@ const Navbar = () => {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={item.icon}></path>
                           </svg>
                           {item.label}
-                          {item.label === 'Notifications' && user?.notifications && user.notifications.length > 0 && (
+                          {item.label === 'Notifications' && notifications > 0 && (
                             <span className="ml-auto bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
-                              {user.notifications.length}
+                              {notifications}
                             </span>
                           )}
                         </Link>
@@ -209,7 +227,7 @@ const Navbar = () => {
               <div className="flex items-center space-x-3">
                 <Link 
                   to="/login" 
-                  className={`text-white font-medium rounded-lg text-sm px-4 py-2 focus:outline-none transition-all duration-300 shadow-lg hover:shadow-xl focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-500 ${
+                  className={`text-white font-medium rounded-lg text-sm px-2 py-2 focus:outline-none transition-all duration-300 shadow-lg hover:shadow-xl focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-500 ${
                     location.pathname === '/login' 
                       ? 'bg-gradient-to-r from-blue-600 to-blue-700' 
                       : 'bg-transparent border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white'
@@ -218,23 +236,15 @@ const Navbar = () => {
                 </Link>
                 <Link 
                   to="/register" 
-                  className={`text-white font-medium rounded-lg text-sm px-4 py-2 focus:outline-none transition-all duration-300 shadow-lg hover:shadow-xl focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-500 ${
+                  className={`text-white font-medium rounded-lg text-sm px-2 py-2 focus:outline-none transition-all duration-300 shadow-lg hover:shadow-xl focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-500 ${
                     location.pathname === '/register' 
                       ? 'bg-gradient-to-r from-blue-600 to-blue-700' 
                       : 'bg-transparent border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white'
                   }`}>
-                  Sign Up
+                  Register
                 </Link>
               </div>
             )}
-
-            {/* About Us Link for Mobile */}
-            {/* <Link 
-              to="/about" 
-              className="md:hidden text-gray-700 hover:text-blue-700 dark:text-gray-300 dark:hover:text-blue-500 font-medium"
-            >
-              About
-            </Link> */}
           </div>
 
           {/* Desktop Navigation */}
@@ -304,9 +314,6 @@ const Navbar = () => {
         )}
       </nav>
       
-      {/* Adding space to accommodate the fixed navbar */}
-      <div className={`h-16 ${isAuthenticated && admin ? 'md:h-28' : 'md:h-16'}`}></div>
-
       {/* Bottom Navigation Dock - Mobile Only */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 dark:bg-gray-800 dark:border-gray-700">
         <div className="grid grid-cols-6 h-16">
@@ -343,9 +350,6 @@ const Navbar = () => {
           ))}
         </div>
       </div>
-
-      {/* Add bottom padding to body content on mobile to account for bottom dock */}
-      <div className="md:hidden h-16"></div>
     </>
   );
 };
