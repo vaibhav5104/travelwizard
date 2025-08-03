@@ -338,40 +338,67 @@ useEffect(() => {
       </nav>
       
       {/* Bottom Navigation Dock - Mobile Only */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-        <div className="grid grid-cols-6 h-16">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50">
+        {/* Gradient backdrop with blur */}
+        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/95 to-white/80 dark:from-black dark:via-black dark:to-gray-900/80 backdrop-blur-lg"></div>
+        
+        {/* Gradient border */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent dark:via-gray-700"></div>
+        
+        {/* Main dock container */}
+        <div className="relative grid grid-cols-6 h-16 px-2">
           {dockItems.map((item) => (
             <Link
               key={item.path}
               to={item.path}
-              className={`flex flex-col items-center justify-center px-2 py-2 transition-all duration-200 ${
+              className={`relative flex flex-col items-center justify-center mx-1 my-2 rounded-xl transition-all duration-300 ease-out transform ${
                 isActive(item.path)
-                  ? 'text-blue-600 dark:text-blue-500 transform scale-110'
-                  : 'text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-500'
+                  ? 'bg-gradient-to-br from-blue-500 via-blue-500 to-blue-400 text-white shadow-lg shadow-blue-500/30 scale-105 -translate-y-1'
+                  : 'bg-gradient-to-br from-gray-100/50 via-gray-50/30 to-white/50 dark:from-gray-800/50 dark:via-gray-700/30 dark:to-gray-600/50 text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 hover:shadow-md hover:scale-105 hover:-translate-y-0.5'
               }`}
             >
-              <svg 
-                className={`w-6 h-6 mb-1 transition-all duration-200 ${
-                  isActive(item.path) ? 'scale-110' : ''
-                }`} 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24" 
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={item.icon}></path>
-              </svg>
-              <span className={`text-xs font-medium transition-all duration-200 ${
-                isActive(item.path) ? 'scale-110 font-semibold' : ''
+              {/* Animated gradient overlay for active state */}
+              {isActive(item.path) && (
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-blue-600/20 via-purple-400/20 to-pink-400/20 animate-pulse"></div>
+              )}
+              
+              {/* Icon with gradient glow effect */}
+              <div className={`relative ${isActive(item.path) ? 'drop-shadow-sm' : ''}`}>
+                <svg 
+                  className={`w-5 h-5 mb-0.5 transition-all duration-300 ${
+                    isActive(item.path) ? 'scale-110 filter drop-shadow-sm' : ''
+                  }`} 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24" 
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={item.icon}></path>
+                </svg>
+              </div>
+              
+              {/* Label with gradient text for active state */}
+              <span className={`text-xs font-medium transition-all duration-300 ${
+                isActive(item.path) 
+                  ? 'font-semibold drop-shadow-sm' 
+                  : 'font-normal'
               }`}>
                 {item.label}
               </span>
+              
+              {/* Floating gradient indicator */}
               {isActive(item.path) && (
-                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-8 h-1 bg-blue-600 rounded-b-full"></div>
+                <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-6 h-1 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 rounded-full shadow-lg animate-pulse"></div>
               )}
+              
+              {/* Hover ripple effect */}
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-blue-500/0 via-purple-500/0 to-pink-500/0 hover:from-blue-500/5 hover:via-purple-500/5 hover:to-pink-500/5 transition-all duration-300"></div>
             </Link>
           ))}
         </div>
+        
+        {/* Bottom gradient reflection */}
+        <div className="absolute -bottom-2 left-0 right-0 h-2 bg-gradient-to-t from-blue-500/10 via-purple-500/5 to-transparent blur-sm"></div>
       </div>
     </>
   );
