@@ -119,27 +119,65 @@ useEffect(() => {
   return (
     <>
       <nav 
-        className={`relative w-full z-50 transition-all duration-300 ${
+        className={`relative w-full z-50 transition-all duration-300 bg-gray-900 ${
           isScrolled 
-            ? 'bg-white border-gray-200 dark:bg-gray-900 shadow-md py-2' 
-            : 'bg-white border-gray-200 dark:bg-gray-900 py-4'
+            ? ' dark:bg-gray-900 shadow-md py-2' 
+            : ' dark:bg-gray-900 py-4'
         }`}
       >
         {/* <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-4">
          */}<div className="max-w-screen-xl flex items-center justify-between mx-auto px-4">
 
-          {/* Logo */}
-          <Link 
-            to="/" 
-            className="flex items-center space-x-2 flex-shrink-0"
-          >
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-yellow-400 to-pink-500 flex items-center justify-center overflow-hidden group-hover:scale-110 transition-transform duration-300">
-              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
-            </div>
-            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Travel Wizard</span>
-          </Link>
+{/* Logo */}
+<Link 
+  to="/" 
+  className="flex items-center space-x-3 flex-shrink-0 group cursor-pointer"
+>
+  <div className="relative">
+    {/* Main logo container with enhanced animations */}
+    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-400 via-orange-500 to-pink-600 flex items-center justify-center overflow-hidden group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 ease-out shadow-lg group-hover:shadow-2xl group-hover:shadow-pink-500/30">
+      {/* Animated background glow */}
+      <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-yellow-300 via-orange-400 to-pink-500 opacity-0 group-hover:opacity-75 group-hover:scale-150 transition-all duration-700 blur-sm"></div>
+      
+      {/* Globe icon with enhanced animations */}
+      <svg className="w-6 h-6 text-white relative z-10 group-hover:scale-125 group-hover:rotate-180 transition-all duration-700 ease-out" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+      
+      {/* Floating particles effect */}
+      <div className="absolute top-1 right-1 w-1 h-1 bg-white rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping transition-opacity duration-300 delay-100"></div>
+      <div className="absolute bottom-1 left-1 w-1 h-1 bg-white rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping transition-opacity duration-300 delay-200"></div>
+      <div className="absolute top-2 left-2 w-0.5 h-0.5 bg-white rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-bounce transition-opacity duration-300 delay-300"></div>
+    </div>
+    
+    {/* Orbiting elements */}
+    <div className="absolute -top-1 -right-1 w-2 h-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+      <div className="w-full h-full bg-yellow-300 rounded-full group-hover:animate-spin transition-all duration-1000"></div>
+    </div>
+    <div className="absolute -bottom-1 -left-1 w-1.5 h-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-150">
+      <div className="w-full h-full bg-pink-400 rounded-full group-hover:animate-bounce transition-all duration-800"></div>
+    </div>
+  </div>
+  
+  {/* Enhanced text with gradient and animations */}
+  <div className="flex flex-col">
+    <span className="text-2xl font-bold whitespace-nowrap bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-white dark:via-gray-100 dark:to-white bg-clip-text text-transparent group-hover:from-yellow-500 group-hover:via-orange-500 group-hover:to-pink-500 transition-all duration-700 ease-out">
+      Travel Wizard
+    </span>
+    {/* Subtle tagline that appears on hover */}
+    <span className="text-xs font-medium text-gray-500 dark:text-gray-400 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-500 ease-out delay-200">
+      Explore the Magic
+    </span>
+  </div>
+  
+  {/* Magical sparkle trail effect */}
+  <div className="absolute -z-10 inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-700">
+    <div className="absolute top-0 left-8 w-1 h-1 bg-yellow-400 rounded-full group-hover:animate-ping" style={{animationDelay: '0.1s'}}></div>
+    <div className="absolute top-4 left-12 w-0.5 h-0.5 bg-pink-400 rounded-full group-hover:animate-ping" style={{animationDelay: '0.3s'}}></div>
+    <div className="absolute top-2 left-16 w-1 h-1 bg-orange-400 rounded-full group-hover:animate-ping" style={{animationDelay: '0.5s'}}></div>
+    <div className="absolute bottom-2 left-10 w-0.5 h-0.5 bg-yellow-300 rounded-full group-hover:animate-ping" style={{animationDelay: '0.7s'}}></div>
+  </div>
+</Link>
 
           {/* Profile Menu & Mobile Toggle - Right side */}
           <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
@@ -259,48 +297,49 @@ useEffect(() => {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
-            <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-              {[
-                { path: '/', label: 'Home' },
-                { path: '/explore', label: 'Explore' },
-                { path: '/city', label: 'Tour' },
-                { path: '/events', label: 'Events' },
-                { path: '/contact', label: 'Contact' },
-                { path: '/about', label: 'About Us' }
-              ].map((navItem) => (
-                <li key={navItem.path}>
-                  <Link
-                    to={navItem.path}
-                    className={`block py-2 px-3 rounded-md ${
-                      isActive(navItem.path)
-                        ? 'text-white bg-blue-700 md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500'
-                        : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700'
-                    }`}
-                    aria-current={isActive(navItem.path) ? "page" : undefined}
-                  >
-                    {navItem.label}
-                  </Link>
-                </li>
-              ))}
+{/* Desktop Navigation */}
+<div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
+  <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-900 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-gray-900 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 ">
+    {[
+      { path: '/', label: 'Home' },
+      { path: '/explore', label: 'Explore' },
+      { path: '/city', label: 'Tour' },
+      { path: '/events', label: 'Events' },
+      { path: '/contact', label: 'Contact' },
+      { path: '/about', label: 'About Us' }
+    ].map((navItem) => (
+      <li key={navItem.path}>
+        <Link
+          to={navItem.path}
+          className={`block py-2 px-3 rounded-md ${
+            isActive(navItem.path)
+              ? 'text-white bg-blue-700 md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500'
+              : 'text-white hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-700 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700'
+          }`}
+          aria-current={isActive(navItem.path) ? "page" : undefined}
+        >
+          {navItem.label}
+        </Link>
+      </li>
+    ))}
 
-              {/* Admin Link - Only show if user is admin */}
-              {isAuthenticated && admin && (
-                <li>
-                  <Link
-                    to="/admin"
-                    className={`block py-2 px-3 rounded-md ${
-                      isActive('/admin')
-                        ? 'text-white bg-blue-700 md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500'
-                        : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700'
-                    }`}
-                  >
-                    Admin
-                  </Link>
-                </li>
-              )}
-            </ul>
-          </div>
+    {/* Admin Link - Only show if user is admin */}
+    {isAuthenticated && admin && (
+      <li>
+        <Link
+          to="/admin"
+          className={`block py-2 px-3 rounded-md ${
+            isActive('/admin')
+              ? 'text-white bg-blue-700 md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500'
+              : 'text-white hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-700 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700'
+          }`}
+        >
+          Admin
+        </Link>
+      </li>
+    )}
+  </ul>
+</div>
         </div>
 
         {/* Admin Navbar - Displayed below the main navbar when user is admin */}
