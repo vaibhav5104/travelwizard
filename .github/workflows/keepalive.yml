@@ -1,4 +1,4 @@
-name: Keep Render Alive
+name: Keep Alive
 
 on:
   schedule:
@@ -11,15 +11,3 @@ jobs:
     steps:
       - name: Ping Render Server
         run: curl -s https://travelwizard.onrender.com/api/ping
-
-      - name: Warm up Auth route
-        run: curl -s https://travelwizard.onrender.com/api/auth/users/vaibhav
-
-      - name: Warm up Tour route
-        run: curl -s https://travelwizard.onrender.com/api/tour/city
-
-      - name: Warm up Place route
-        run: curl -s https://travelwizard.onrender.com/api/place
-
-      - name: Warm up Itineraries route
-        run: curl -s https://travelwizard.onrender.com/api/itineraries
