@@ -8,7 +8,7 @@ import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import { toast } from "react-toastify";
 import { useAuth } from '../store/auth';
 import { MapPin, Calendar, DollarSign, Hotel, Clock } from 'lucide-react';
-
+import { FaBuildingLock } from "react-icons/fa6";
 
 const ItineraryViewer = () => {
   const { id } = useParams(); // Get itinerary ID from URL
@@ -759,7 +759,7 @@ useEffect(() => {
         
               {recommendedItineraries.length === 0 ? (
                 <div className="bg-gray-50 rounded-xl p-10 text-center shadow-sm">
-                  <div className="text-gray-400 text-8xl mb-4">✈️</div>
+                  <div className="text-gray-400 text-8xl mb-4"><FaBuildingLock/></div>
                   <h3 className="text-xl font-medium text-gray-700 mb-2">No recommendedItineraries found</h3>
                   <p className="text-gray-500">Your saved travel plans will appear here once you create them.</p>
                 </div>
@@ -833,12 +833,12 @@ useEffect(() => {
                           View Details
                         </Link>
         
-                        <button
+                        {/* <button
                           onClick={(e) => e.stopPropagation()}
                           className="border border-gray-200 hover:bg-gray-50 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
                         >
                           Edit
-                        </button>
+                        </button> */}
                       </div>
                     </div>
                   ))}

@@ -32,75 +32,74 @@ const Explore = () => {
   };
 
 
-useEffect(() => {
-  const fetchRecommendations = async () => {
-    try {
-      if (user && user._id) {
-        // Logged-in: Try to get personalized recommendations
-        const res = await fetch(`${API}/api/itineraries/user/${user._id}/recommendations`);
-        const data = await res.json();
+  useEffect(() => {
+    const fetchRecommendations = async () => {
+      try {
+        if (user && user._id) {
+          // Logged-in: Try to get personalized recommendations
+          const res = await fetch(`${API}/api/itineraries/user/${user._id}/recommendations`);
+          const data = await res.json();
 
-        if (!res.ok) {
-          toast.error("Failed to fetch user recommendations");
+          if (!res.ok) {
+            toast.error("Failed to fetch user recommendations");
+          }
+
+          if (Array.isArray(data) && data.length > 0) {
+            setRecommendedItineraries(await enrichItineraries(data));
+            return; // ✅ Done — personalized recommendations
+          }
         }
 
-        if (Array.isArray(data) && data.length > 0) {
-          setRecommendedItineraries(await enrichItineraries(data));
-          return; // ✅ Done — personalized recommendations
+        // 🔁 If no user or user has no saved itineraries — fallback to random
+        const allRes = await fetch(`${API}/api/itineraries`);
+        const allItineraries = await allRes.json();
+
+        if (!allRes.ok || !Array.isArray(allItineraries) || allItineraries.length === 0) {
+          toast.error("No itineraries available for random recommendation.");
+          return;
         }
+
+        const random = allItineraries[Math.floor(Math.random() * allItineraries.length)];
+        setRandomItinerary(random);
+
+        const randomRes = await fetch(`${API}/api/itineraries/${random._id}/recommendations`);
+        const randomRecs = await randomRes.json();
+
+        if (Array.isArray(randomRecs) && randomRecs.length > 0) {
+          setRecommendedItineraries(await enrichItineraries(randomRecs));
+        } else {
+          toast("No recommendations found for the selected itinerary.");
+        }
+      } catch (err) {
+        toast.error(`Error: ${err.message}`);
       }
+    };
 
-      // 🔁 If no user or user has no saved itineraries — fallback to random
-      const allRes = await fetch(`${API}/api/itineraries`);
-      const allItineraries = await allRes.json();
+    fetchRecommendations();
+  }, [user]);
 
-      if (!allRes.ok || !Array.isArray(allItineraries) || allItineraries.length === 0) {
-        toast.error("No itineraries available for random recommendation.");
-        return;
+  const enrichItineraries = async (itineraries) => {
+    return await Promise.all(itineraries.map(async (item) => {
+      try {
+        const cityRes = await fetch(`${API}/api/tour/city/${encodeURIComponent(item.city)}`);
+        const cityData = await cityRes.json();
+
+        return {
+          ...item,
+          cityImage: cityData.city?.cityImage?.[0] || null,
+        };
+      } catch {
+        return { ...item, cityImage: null };
       }
-
-      const random = allItineraries[Math.floor(Math.random() * allItineraries.length)];
-      setRandomItinerary(random);
-
-      const randomRes = await fetch(`${API}/api/itineraries/${random._id}/recommendations`);
-      const randomRecs = await randomRes.json();
-
-      if (Array.isArray(randomRecs) && randomRecs.length > 0) {
-        setRecommendedItineraries(await enrichItineraries(randomRecs));
-      } else {
-        toast("No recommendations found for the selected itinerary.");
-      }
-    } catch (err) {
-      toast.error(`Error: ${err.message}`);
-    }
+    }));
   };
-
-  fetchRecommendations();
-}, [user]);
-
-const enrichItineraries = async (itineraries) => {
-  return await Promise.all(itineraries.map(async (item) => {
-    try {
-      const cityRes = await fetch(`${API}/api/tour/city/${encodeURIComponent(item.city)}`);
-      const cityData = await cityRes.json();
-
-      return {
-        ...item,
-        cityImage: cityData.city?.cityImage?.[0] || null,
-      };
-    } catch {
-      return { ...item, cityImage: null };
-    }
-  }));
-};
-
 
   const handleCardClick = (id) => {
     setSelectedId(selectedId === id ? null : id);
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="bg-gradient-to-b from-blue-500 to-purple-400 min-h-screen">
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-blue-600 to-indigo-800 text-white py-16">
         <div className="container mx-auto px-4">
@@ -336,32 +335,32 @@ const enrichItineraries = async (itineraries) => {
         <section className="mb-16">
           <h2 className="text-3xl font-bold text-gray-800 mb-8">User Reviews</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-white p-6 rounded-lg shadow-md">
+            <div className="bg-gradient-to-b from-gray-200 to-yellow-200 p-6 rounded-lg shadow-md">
               <div className="flex items-center mb-4">
-                <div className="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-xl mr-4">JD</div>
+                <div className="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-xl mr-4">YK</div>
                 <div>
-                  <h4 className="font-medium text-gray-900">Jane Doe</h4>
+                  <h4 className="font-medium text-gray-900">Yash Kumar</h4>
                   <div className="flex text-yellow-400">
                     <span>★★★★★</span>
                   </div>
                 </div>
               </div>
-              <p className="text-gray-600 mb-3">"Paris is magical! I fell in love with the city. The Eiffel Tower at night is an unforgettable experience that everyone should witness at least once."</p>
-              <p className="text-sm text-gray-500">Visited: June 2024</p>
+              <p className="text-gray-600 mb-3">"Chandigarh is magical! I fell in love with the city. The Sukhna Lake is an unforgettable experience that everyone should witness at least once."</p>
+              <p className="text-sm text-gray-500">Visited: June 2025</p>
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-md">
+            <div className="bg-gradient-to-b from-gray-200 to-yellow-200 p-6 rounded-lg shadow-md">
               <div className="flex items-center mb-4">
-                <div className="h-12 w-12 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-bold text-xl mr-4">JS</div>
+                <div className="h-12 w-12 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-bold text-xl mr-4">BS</div>
                 <div>
-                  <h4 className="font-medium text-gray-900">John Smith</h4>
+                  <h4 className="font-medium text-gray-900">Bakshish Singh</h4>
                   <div className="flex text-yellow-400">
                     <span>★★★★☆</span>
                   </div>
                 </div>
               </div>
-              <p className="text-gray-600 mb-3">"New York is always full of energy! A must-see destination. The city truly never sleeps and offers countless attractions for every type of traveler."</p>
-              <p className="text-sm text-gray-500">Visited: September 2024</p>
+              <p className="text-gray-600 mb-3">"Manali is always full of energy! A must-see destination. The city truly never sleeps and offers countless attractions for every type of traveler."</p>
+              <p className="text-sm text-gray-500">Visited: September 2025</p>
             </div>
           </div>
         </section>
@@ -370,37 +369,37 @@ const enrichItineraries = async (itineraries) => {
         <section className="mb-16">
           <h2 className="text-3xl font-bold text-gray-800 mb-8">Travel Tips & Resources</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+            <div className="bg-gradient-to-b from-red-500 to-blue-700 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
               <div className="text-blue-600 mb-4" >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>
               </div>
               <h3 className="text-xl font-bold text-gray-800 mb-2">Safety Guides</h3>
-              <p className="text-gray-600 mb-4">Essential safety tips for travelers in different regions around the world.</p>
-              <a href="https://www.worldpackers.com/articles/simple-travel-safety-tips" className="text-blue-600 hover:text-blue-800 font-medium">Read more →</a>
+              <p className="text-white mb-4">Essential safety tips for travelers in different regions around the world.</p>
+              <a href="https://www.worldpackers.com/articles/simple-travel-safety-tips" className="text-gray-100 hover:text-yellow-200 font-medium">Read more →</a>
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+            <div className="bg-gradient-to-b from-yellow-500 to-blue-400 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
               <div className="text-blue-600 mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
               <h3 className="text-xl font-bold text-gray-800 mb-2">Budget Planning</h3>
-              <p className="text-gray-600 mb-4">How to plan your travel budget and save money while exploring new places.</p>
-              <a href="https://www.ef.com/wwen/blog/language/how-to-travel-on-a-budget-9-best-tips/" className="text-blue-600 hover:text-blue-800 font-medium">Read more →</a>
+              <p className="text-white mb-4">How to plan your travel budget and save money while exploring new places.</p>
+              <a href="https://www.ef.com/wwen/blog/language/how-to-travel-on-a-budget-9-best-tips/" className="text-gray-100 hover:text-yellow-200 font-medium">Read more →</a>
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+            <div className="bg-gradient-to-b from-purple-500 to-blue-400 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
               <div className="text-blue-600 mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
                 </svg>
               </div>
               <h3 className="text-xl font-bold text-gray-800 mb-2">Language Tips</h3>
-              <p className="text-gray-600 mb-4">Essential phrases and language resources for international travelers.</p>
-              <a href="https://www.ef.com/wwen/blog/language/essential-english-phrases-travel/" className="text-blue-600 hover:text-blue-800 font-medium">Read more →</a>
+              <p className="text-white mb-4">Essential phrases and language resources for international travelers.</p>
+              <a href="https://www.ef.com/wwen/blog/language/essential-english-phrases-travel/" className="text-gray-100 hover:text-yellow-200 font-medium">Read more →</a>
             </div>
           </div>
         </section>

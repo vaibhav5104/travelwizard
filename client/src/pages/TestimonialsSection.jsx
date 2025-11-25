@@ -33,7 +33,7 @@ const TestimonialsSection = () => {
 
   return (
     <>
-      <section ref={sectionRef} className="py-20 px-4 observe-section opacity-0 bg-white">
+      <section ref={sectionRef} className="py-20 px-4 observe-section opacity-0 bg-gradient-to-b from-yellow-200 to-purple-400">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-gray-900">
             What <span className="text-pink-500">Travelers Say</span>
@@ -43,9 +43,9 @@ const TestimonialsSection = () => {
             {/* Testimonial 1 */}
             <div className="bg-white rounded-lg p-6 shadow-lg border border-gray-100">
               <div className="flex items-center mb-4">
-                <div className="h-12 w-12 rounded-full bg-pink-500 flex items-center justify-center text-xl font-bold text-white mr-4">JD</div>
+                <div className="h-12 w-12 rounded-full bg-pink-500 flex items-center justify-center text-xl font-bold text-white mr-4">AK</div>
                 <div>
-                  <h4 className="text-lg font-semibold text-gray-900">John Doe</h4>
+                  <h4 className="text-lg font-semibold text-gray-900">Akash</h4>
                   <p className="text-sm text-gray-500">Adventure Seeker</p>
                 </div>
               </div>
@@ -56,9 +56,9 @@ const TestimonialsSection = () => {
             {/* Testimonial 2 */}
             <div className="bg-white rounded-lg p-6 shadow-lg border border-gray-100">
               <div className="flex items-center mb-4">
-                <div className="h-12 w-12 rounded-full bg-pink-500 flex items-center justify-center text-xl font-bold text-white mr-4">JS</div>
+                <div className="h-12 w-12 rounded-full bg-pink-500 flex items-center justify-center text-xl font-bold text-white mr-4">HN</div>
                 <div>
-                  <h4 className="text-lg font-semibold text-gray-900">Jane Smith</h4>
+                  <h4 className="text-lg font-semibold text-gray-900">Heena</h4>
                   <p className="text-sm text-gray-500">Family Traveler</p>
                 </div>
               </div>
@@ -71,7 +71,7 @@ const TestimonialsSection = () => {
               <div className="flex items-center mb-4">
                 <div className="h-12 w-12 rounded-full bg-pink-500 flex items-center justify-center text-xl font-bold text-white mr-4">RJ</div>
                 <div>
-                  <h4 className="text-lg font-semibold text-gray-900">Robert Johnson</h4>
+                  <h4 className="text-lg font-semibold text-gray-900">Rajesh</h4>
                   <p className="text-sm text-gray-500">Business Traveler</p>
                 </div>
               </div>

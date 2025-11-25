@@ -289,7 +289,7 @@ const Home = () => {
       </Suspense>
       
       {/* Call to Action */}
-      <section className="py-20 px-4 bg-blue-900 observe-section opacity-0">
+      <section className="py-20 px-4 bg-gradient-to-b from-gray-700 to-blue-400 observe-section opacity-0">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-8 text-white">
             Ready for Your Next Adventure?

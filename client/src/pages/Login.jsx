@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../store/auth";
 import { toast } from "react-toastify";
 import { GoogleLogin } from '@react-oauth/google';
+import { RiLockPasswordLine } from "react-icons/ri";
 import axios from 'axios';
 
 const Login = () => {
@@ -10,6 +11,7 @@ const Login = () => {
         email: "",
         password: "",
     });
+    const [showPassword, setShowPassword] = useState(false);
 
     const navigate = useNavigate();
     const { storeTokenInLS, API } = useAuth();
@@ -111,13 +113,11 @@ const Login = () => {
                                 Password
                             </label>
                             <div className="mt-1 relative rounded-md shadow-sm">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <svg className="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                        <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
-                                    </svg>
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none ">
+                                    <RiLockPasswordLine className="w-5 h-5" fill="gray"/>
                                 </div>
                                 <input
-                                    type="password"
+                                    type={showPassword ? "text" : "password"}
                                     name="password"
                                     id="password"
                                     required
@@ -127,11 +127,13 @@ const Login = () => {
                                     className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 pr-4 py-3 border-gray-300 rounded-lg text-gray-900 placeholder-gray-400"
                                     placeholder="••••••••"
                                 />
-                            </div>
-                            <div className="text-right mt-2">
-                                <Link to="/contact" className="text-sm text-indigo-600 hover:text-indigo-500">
-                                    Forgot password?
-                                </Link>
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-3 top-3 text-gray-500 hover:text-gray-700"
+                                >
+                                    {showPassword ? "🙈" : "👁️"}
+                                </button>
                             </div>
                         </div>
 

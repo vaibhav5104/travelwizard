@@ -446,7 +446,7 @@ const ProfilePage = () => {
                     <h2 className="text-xl font-semibold text-gray-800 mb-6">Account Security</h2>
                     
                     <div className="space-y-6">
-                      <div className="flex items-center justify-between p-4 bg-white rounded-lg shadow-sm">
+                      {/* <div className="flex items-center justify-between p-4 bg-white rounded-lg shadow-sm">
                         <div>
                           <h3 className="font-medium text-gray-900">Password</h3>
                           <p className="text-sm text-gray-500 mt-1">Update your password to keep your account secure.</p>
@@ -474,7 +474,7 @@ const ProfilePage = () => {
                         <button className="px-4 py-2 text-sm font-medium text-indigo-600 hover:text-indigo-800 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors">
                           Manage Sessions
                         </button>
-                      </div>
+                      </div> */}
                       
                       <div className="flex items-center justify-between p-4 bg-yellow-50 rounded-lg shadow-sm border border-yellow-200">
                         <div>

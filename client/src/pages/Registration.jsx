@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../store/auth";
 import { GoogleLogin } from '@react-oauth/google';
+import { RiLockPasswordLine } from "react-icons/ri";
 import axios from 'axios';
 
 const Register = () => {
@@ -16,6 +17,7 @@ const Register = () => {
     const [user, setUser] = useState(defaultUser);
     const navigate = useNavigate();
     const { storeTokenInLS, API } = useAuth();
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleInput = (e) => {
         let name = e.target.name;
@@ -104,7 +106,7 @@ const Register = () => {
                                     value={user.username}
                                     onChange={handleInput}
                                     className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 pr-4 py-3 border-gray-300 rounded-lg text-gray-900 placeholder-gray-400"
-                                    placeholder="johnsmith"
+                                    placeholder="username"
                                 />
                             </div>
                         </div>
@@ -153,7 +155,7 @@ const Register = () => {
                                     value={user.phone}
                                     onChange={handleInput}
                                     className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 pr-4 py-3 border-gray-300 rounded-lg text-gray-900 placeholder-gray-400"
-                                    placeholder="+1 (555) 123-4567"
+                                    placeholder="+91 12345 67890"
                                 />
                             </div>
                         </div>
@@ -163,13 +165,11 @@ const Register = () => {
                                 Password
                             </label>
                             <div className="mt-1 relative rounded-md shadow-sm">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <svg className="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
-                                    </svg>
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none ">
+                                    <RiLockPasswordLine className="w-5 h-5" fill="gray"/>
                                 </div>
                                 <input
-                                    type="password"
+                                    type={showPassword ? "text" : "password"}
                                     name="password"
                                     id="password"
                                     required
@@ -179,8 +179,14 @@ const Register = () => {
                                     className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 pr-4 py-3 border-gray-300 rounded-lg text-gray-900 placeholder-gray-400"
                                     placeholder="••••••••"
                                 />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-3 top-3 text-gray-500 hover:text-gray-700"
+                                >
+                                    {showPassword ? "🙈" : "👁️"}
+                                </button>
                             </div>
-                            <p className="mt-2 text-xs text-gray-500">Password must be at least 8 characters</p>
                         </div>
 
                         <div>
