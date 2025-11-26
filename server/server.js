@@ -19,7 +19,7 @@ const corsOptions = {
 console.log("Frontend env is : ",process.env.FRONTEND_URL)
 
 app.use(cors(corsOptions));
-app.options("*", cors(corsOptions)); // Handles preflight requests for all routes
+app.options("(.*)", cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
