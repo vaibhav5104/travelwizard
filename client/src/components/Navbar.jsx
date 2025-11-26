@@ -43,7 +43,7 @@ useEffect(() => {
     setIsMobileMenuOpen(false);
     setIsProfileMenuOpen(false);
   }, [location]);
-  console.log(user)
+  // console.log(user)
 // console.log("Notifications:", notifications);
 
   // Close profile dropdown when clicking outside
