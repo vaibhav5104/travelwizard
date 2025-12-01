@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useAuth } from "../store/auth";
 
 const AddItinerary = () => {
+const { API } = useAuth();
   const [city, setCity] = useState('');
   const [userBudget, setUserBudget] = useState('');
   const [totalDays, setTotalDays] = useState('');
@@ -16,7 +18,7 @@ const AddItinerary = () => {
     try {
       const token = localStorage.getItem('token');
       const res = await axios.post(
-        'http://localhost:3000/api/itineraries',
+        `${API}/api/itineraries`,
         { city, userBudget, totalDays },
         {
           headers: {
