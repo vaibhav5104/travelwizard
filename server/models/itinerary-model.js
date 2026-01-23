@@ -21,6 +21,7 @@ const itinerarySchema = new mongoose.Schema({
       name: String,
       rating: Number,
       distance: Number,
+      budget: Number,
       description: String,
       latitude: Number,
       longitude: Number

@@ -74,7 +74,16 @@ const createItinerary = async (req, res) => {
         if (!selectedPlaces.find(p => p._id.equals(place._id)) && 
             (totalPlaceBudget + estimatedCost <= remainingBudget) &&
             count < 3) {
-          selectedPlaces.push(place);
+          selectedPlaces.push({
+            _id: place._id,
+            name: place.name,
+            rating: place.rating,
+            distance: place.distance,
+            description: place.description,
+            latitude: place.latitude,
+            longitude: place.longitude,
+            budget: place.budget
+          });
           dayPlaces.push(place.name);
           totalPlaceBudget += estimatedCost;
           count++;
@@ -111,8 +120,9 @@ const createItinerary = async (req, res) => {
         rating: place.rating,
         distance: place.distance,
         description: place.description,
-        latitude: place.latitude,
-        longitude: place.longitude
+        budget : place.budget,
+        latitude: Number(place.latitude),
+        longitude: Number(place.longitude)
       })),
       dailyPlan,
       owner: req.userID,
@@ -125,6 +135,74 @@ const createItinerary = async (req, res) => {
     console.error("Itinerary creation error:", err);
     res.status(500).json({ error: 'Failed to create itinerary', details: err.message });
   }
+};
+
+const createMultipleItineraries = async (req, res) => {
+  const { cities = [], countPerCity = 10 } = req.body;
+
+  if (!Array.isArray(cities) || cities.length === 0) {
+    return res.status(400).json({ message: 'Cities array is required' });
+  }
+
+  const results = [];
+
+  // Preset combinations to ensure diversity
+  const budgetDayCombos = [
+    { budget: 2500,  days: 2 },
+    { budget: 4000,  days: 3 },
+    { budget: 8000,  days: 2 },
+    { budget: 8000,  days: 3 },
+    { budget: 12000, days: 3 },
+    { budget: 12000, days: 5 },
+    { budget: 20000, days: 3 },
+    { budget: 20000, days: 4 },
+    { budget: 30000, days: 5 }
+  ];
+
+  for (const city of cities) {
+    let createdCount = 0;
+    let attempts = 0;
+
+    for (const combo of budgetDayCombos) {
+      if (createdCount >= countPerCity) break;
+
+      attempts++;
+
+      // Mock req/res for reuse of existing controller
+      const fakeReq = {
+        body: {
+          city,
+          userBudget: combo.budget,
+          totalDays: combo.days
+        },
+        userID: req.userID // pass authenticated user
+      };
+
+      const fakeRes = {
+        status: () => ({
+          json: () => {}
+        })
+      };
+
+      try {
+        await createItinerary(fakeReq, fakeRes);
+        createdCount++;
+      } catch (err) {
+        // Silent fail — move to next combo
+      }
+    }
+
+    results.push({
+      city,
+      created: createdCount,
+      attempted: attempts
+    });
+  }
+
+  res.status(201).json({
+    message: 'Batch itinerary creation completed',
+    summary: results
+  });
 };
 
 // Get all itineraries for a specific city
@@ -452,7 +530,7 @@ const getRecommendedItineraries = async (req, res) => {
 
     similarities.sort((a, b) => b.similarity - a.similarity);
 
-    const topItineraries = similarities.slice(0, req.query.topN || 5).map(i => i.itinerary);
+    const topItineraries = similarities.slice(0, req.query.topN || 6).map(i => i.itinerary);
 
     res.status(200).json(topItineraries);
   } catch (err) {
@@ -496,7 +574,7 @@ const getItineraryRecommendationsForUser = async (req, res) => {
     recommendations.sort((a, b) => b.similarity - a.similarity);
 
     const topItineraries = recommendations
-      .slice(0, parseInt(req.query.topN) || 5)
+      .slice(0, parseInt(req.query.topN) || 6)
       .map(i => i.itinerary);
 
     res.status(200).json({ topItineraries });
@@ -507,4 +585,4 @@ const getItineraryRecommendationsForUser = async (req, res) => {
   }
 };
 
-module.exports = {updateItinerary,createItinerary,deleteItinerary,getAllItineraries,getItineraryById,getFilteredItineraries,saveItinerary,getSavedItineraries,getCityItineraries,getRecommendedItineraries,getItineraryRecommendationsForUser}
+module.exports = {updateItinerary,createItinerary,createMultipleItineraries,deleteItinerary,getAllItineraries,getItineraryById,getFilteredItineraries,saveItinerary,getSavedItineraries,getCityItineraries,getRecommendedItineraries,getItineraryRecommendationsForUser}

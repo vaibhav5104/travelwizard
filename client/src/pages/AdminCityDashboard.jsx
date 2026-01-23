@@ -105,9 +105,9 @@ const AdminCity = () => {
                                         <th className="py-3 px-6 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
                                             City Name
                                         </th>
-                                        <th className="py-3 px-6 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                        {/* <th className="py-3 px-6 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
                                             Event Count
-                                        </th>
+                                        </th> */}
                                         <th className="py-3 px-6 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
                                             Itinerary Count
                                         </th>
@@ -125,11 +125,11 @@ const AdminCity = () => {
                                             <td className="py-4 px-6 whitespace-nowrap">
                                                 <div className="font-medium text-gray-900">{city.name}</div>
                                             </td>
-                                            <td className="py-4 px-6 whitespace-nowrap">
+                                            {/* <td className="py-4 px-6 whitespace-nowrap">
                                                 <div className="bg-green-100 text-green-800 text-xs inline-flex items-center px-2.5 py-0.5 rounded-full">
                                                     {city.events?.eventName?.length || 0} events
                                                 </div>
-                                            </td>
+                                            </td> */}
                                             <td className="py-4 px-6 whitespace-nowrap">
                                                 <div className="bg-purple-100 text-purple-800 text-xs inline-flex items-center px-2.5 py-0.5 rounded-full">
                                                     {city.itineraryCount} itineraries

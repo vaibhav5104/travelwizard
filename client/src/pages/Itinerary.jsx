@@ -658,11 +658,21 @@ useEffect(() => {
                     
                     <div className="mt-4 md:mt-0">
                       <div className="flex items-center bg-white rounded-lg py-2 px-4 shadow">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-600 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
                         <span className="font-semibold text-gray-800">₹{itinerary.selectedHotel.Price} per night</span>
                       </div>
+                      {itinerary.selectedHotel.URL && (
+                        <a 
+                          href={itinerary.selectedHotel.URL.startsWith('http') ? itinerary.selectedHotel.URL : `https://goibibo.com${itinerary.selectedHotel.URL}`} 
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-3 inline-flex items-center justify-center w-full text-blue-600 hover:text-blue-800 font-medium"
+                        >
+                          View Details
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -689,20 +699,43 @@ useEffect(() => {
                       return (
                         <div key={placeIndex} className="bg-white rounded-lg p-4 shadow">
                           <div className="flex justify-between items-start">
-                            <h6 className="text-md font-semibold text-gray-800">{placeName}</h6>
-                            
-                            {placeDetails?.rating && (
-                              <div className="flex items-center bg-yellow-50 px-2 py-1 rounded-md">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
-                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                </svg>
-                                <span className="ml-1 text-yellow-700 font-medium">{placeDetails.rating}</span>
-                              </div>
-                            )}
+                            <div className='flex gap-1 '>
+                              <h6 className="text-md font-semibold text-gray-800">{placeName}</h6>
+                              
+                              {placeDetails?.rating && (
+                                <div className="flex items-center bg-yellow-50 px-2  rounded-md">
+                                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                  </svg>
+                                  <span className="ml-1 text-yellow-700 font-medium">{placeDetails.rating}</span>
+                                </div>
+                              )}
+                            </div>
+                            <div className={`text-xs font-semibold px-2.5 py-1 rounded-md border ${
+                              placeDetails.budget === 0 || placeDetails.budget === '0'
+                                ? 'bg-gradient-to-r from-teal-50 to-cyan-50 text-teal-700 border-teal-200'
+                                : 'bg-amber-50 text-amber-900 border-amber-200'
+                            }`}>
+                              {placeDetails.budget === 0 || placeDetails.budget === '0' 
+                                ? '✓ Free Entry' 
+                                : `₹${Number(placeDetails.budget).toLocaleString('en-IN')}`}
+                            </div>
                           </div>
                           
                           {placeDetails?.description && (
                             <p className="text-gray-600 mt-2 text-sm">{placeDetails.description}</p>
+                          )}
+
+                          {placeDetails?.latitude && placeDetails?.longitude && (
+                              <button
+                                onClick={scrollToMap}
+                                className="mt-3 flex items-center text-sm text-blue-600 hover:text-blue-800"
+                              >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                                </svg>
+                                View on Map
+                              </button>
                           )}
                         </div>
                       );

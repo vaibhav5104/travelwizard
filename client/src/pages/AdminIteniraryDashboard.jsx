@@ -112,7 +112,7 @@ const AdminItinerary = () => {
                                         <th className="py-3 px-6 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Days</th>
                                         <th className="py-3 px-6 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Places Count</th>
                                         <th className="py-3 px-6 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Hotels Count</th>
-                                        <th className="py-3 px-6 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Transportation Count</th>
+                                        {/* <th className="py-3 px-6 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Transportation Count</th> */}
                                         <th className="py-3 px-6 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Update</th>
                                         <th className="py-3 px-6 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Delete</th>
                                     </tr>
@@ -140,11 +140,11 @@ const AdminItinerary = () => {
                                                         {itinerary.selectedHotel ? 1 : 0} hotel
                                                     </div>
                                                 </td>
-                                                <td className="py-4 px-6 whitespace-nowrap">
-                                                    <div className="bg-yellow-100 text-yellow-800 text-xs inline-flex items-center px-2.5 py-0.5 rounded-full">
-                                                        0 transports
-                                                    </div>
-                                                </td>
+                                                {/* <td className="py-4 px-6 whitespace-nowrap"> */}
+                                                    {/* <div className="bg-yellow-100 text-yellow-800 text-xs inline-flex items-center px-2.5 py-0.5 rounded-full"> */}
+                                                        {/* 0 transports */}
+                                                    {/* </div> */}
+                                                {/* </td> */}
                                                 <td className="py-4 px-6 whitespace-nowrap">
                                                     <button
                                                         onClick={() => handleUpdate(itinerary._id)}

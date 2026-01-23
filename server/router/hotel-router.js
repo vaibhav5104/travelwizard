@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const hotelController = require("../controllers/hotel-controller")
+const adminMiddleware = require('../middlewares/admin-middleware')
+const authMiddleware = require('../middlewares/auth-middleware')
 
 router 
     .route("/city-hotels")
@@ -8,7 +10,7 @@ router
 
 router 
     .route("/city-hotels")
-    .post(hotelController.addCityWithHotels)
+    .post(authMiddleware, adminMiddleware, hotelController.addCityWithHotels)
 
 router 
     .route("/city-hotels/:city")
@@ -16,6 +18,6 @@ router
 
 router 
     .route("/city-hotels/update")
-    .put(hotelController.updateHotelCoordinates)
+    .put(authMiddleware, adminMiddleware, hotelController.updateHotelCoordinates)
 
 module.exports = router

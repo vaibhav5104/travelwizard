@@ -1,7 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const cityController = require('../controllers/city-controller')
-// const authMiddleware = require("../middlewares/auth-middleware");
+const adminMiddleware = require('../middlewares/admin-middleware')
+const authMiddleware = require('../middlewares/auth-middleware')
 
 router
     .route("/city")
@@ -21,8 +22,8 @@ router
     // .get(iteneraryController.getItineraries)
 
 router.route("/city/:id")
-    .put(cityController.updateCity) // Update city
-    .delete(cityController.deleteCity); // Delete city
+    .put(authMiddleware, adminMiddleware, cityController.updateCity) // Update city
+    .delete(authMiddleware, adminMiddleware, cityController.deleteCity); // Delete city
 
 // router
     // .route("/itinerary/:id")
