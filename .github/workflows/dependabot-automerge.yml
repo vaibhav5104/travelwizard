@@ -1,4 +1,4 @@
-name: Dependabot Auto-Merge (Safe & Clean)
+name: Dependabot Auto-Merge
 
 on:
   pull_request:
@@ -7,88 +7,38 @@ on:
 permissions:
   contents: write
   pull-requests: write
-  issues: write
+  issues: write   # needed for creating/applying labels
 
 jobs:
   dependabot:
-    if: github.actor == 'dependabot[bot]'
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Fetch official Dependabot metadata
       - name: Fetch Dependabot metadata
         id: metadata
         uses: dependabot/fetch-metadata@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      # 2. Auto-merge ALL security updates (highest priority)
-      - name: Auto-merge security updates
-        if: steps.metadata.outputs.update-type == 'security'
-        uses: fastify/github-action-merge-dependabot@v3
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          merge-method: squash
-
-      # 3. Auto-merge PATCH updates only
       - name: Auto-merge patch updates
         if: steps.metadata.outputs.update-type == 'version-update:semver-patch'
-        uses: fastify/github-action-merge-dependabot@v3
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          merge-method: squash
+        run: gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # 4. Label MINOR / MAJOR updates
-      - name: Label minor or major updates
+      - name: Label and comment on minor/major updates
         if: |
-          steps.metadata.outputs.update-type == 'version-update:semver-minor' ||
-          steps.metadata.outputs.update-type == 'version-update:semver-major'
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const type = context.payload.pull_request.title.includes('major')
-              ? 'major-update'
-              : 'minor-update';
-
-            await github.rest.issues.addLabels({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              labels: ['dependabot', type, 'needs-review']
-            });
-
-      # 5. Comment for manual review on MINOR / MAJOR
-      - name: Comment for manual review
-        if: |
-          steps.metadata.outputs.update-type == 'version-update:semver-minor' ||
-          steps.metadata.outputs.update-type == 'version-update:semver-major'
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const updateType = steps.metadata.outputs.update-type.replace('version-update:', '');
-
-            await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              body: `👀 **Manual review required**
-              This Dependabot PR is a **${updateType}** update.
-              It will not be auto-merged to avoid potential breaking changes.`
-            });
-
-      # 6. Fallback: Unknown update type
-      - name: Unknown update type fallback
-        if: steps.metadata.outputs.update-type == ''
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              body: `⚠️ **Manual review required**
-              Unable to determine Dependabot update type automatically.`
-            });
+          github.event.action != 'synchronize' &&
+          (steps.metadata.outputs.update-type == 'version-update:semver-minor' ||
+           steps.metadata.outputs.update-type == 'version-update:semver-major')
+        run: |
+          gh label create "$LABEL" --repo "$GITHUB_REPOSITORY" --force
+          gh pr edit "$PR_URL" --add-label "dependabot,needs-review,$LABEL"
+          gh pr comment "$PR_URL" --body "👀 Manual review required: this is a **$UPDATE_TYPE** update."
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          UPDATE_TYPE: ${{ steps.metadata.outputs.update-type }}
+          LABEL: ${{ steps.metadata.outputs.update-type == 'version-update:semver-major' && 'major-update' || 'minor-update' }}
